@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telegram Abuse Report</title>
+</head>
+
+<body style="font-family:Arial;padding:20px;">
+
+<h3>Telegram Abuse Report</h3>
+
+<p>Reporter Name (optional):</p>
+<input id="rname" type="text" style="width:100%;">
+
+<br><br>
+
+<p>Reporter Contact (optional):</p>
+<input id="rcontact" type="text" style="width:100%;">
+
+<br><br>
+
+<p>Paste Telegram group / channel / user link:</p>
+<textarea id="link" rows="4" style="width:100%;"></textarea>
+
+<br><br>
+
+<select id="reason" style="width:100%;">
+  <option>Child Sexual Abuse Material (CSAM)</option>
+  <option>Child Exploitation / Grooming</option>
+  <option>Indecent / Sexual Talk</option>
+  <option>18+ Incest / Family Sexual Talk (No Minors)</option>
+</select>
+
+<br><br>
+
+<button onclick="sendMail()"
+style="width:100%;padding:12px;background:red;color:white;">
+Send Report
+</button>
+
+<hr>
+
+<div style="text-align:center;font-size:13px;color:#666;">
+  Created by <b>Muhammed Adhinan</b><br>
+  Contact: <b>hexslayer404@gmail.com</b>
+</div>
+
+<script>
+function sendMail(){
+
+  var rname = document.getElementById("rname").value.trim();
+  var rcontact = document.getElementById("rcontact").value.trim();
+  var link = document.getElementById("link").value.trim();
+  var reason = document.getElementById("reason").value;
+
+  if(link === ""){
+    alert("Paste Telegram link first");
+    return;
+  }
+
+  var reporter = "";
+  if (rname !== "" || rcontact !== "") {
+    reporter =
+      "Reporter Details:\n" +
+      (rname !== "" ? "Name: " + rname + "\n" : "") +
+      (rcontact !== "" ? "Contact: " + rcontact + "\n" : "") +
+      "\n";
+  }
+
+  var to = "cybercrime@nic.in";
+  var cc = "abuse@telegram.org";
+
+  var subject = encodeURIComponent(
+    "URGENT: Illegal Content on Telegram (" + reason + ")"
+  );
+
+  var body = encodeURIComponent(
+    "Respected Cyber Crime Team,\n\n" +
+    reporter +
+    "Platform: Telegram\n" +
+    "Nature of Complaint: " + reason + "\n\n" +
+    "Link / Username:\n" +
+    link + "\n\n" +
+    "Short Explanation:\n" +
+    "The above Telegram group/channel/user is involved in objectionable activities. Kindly investigate and take appropriate action.\n\n" +
+    "Evidence:\n" +
+    "Screenshots attached if required.\n\n" +
+    "Emergency Note:\n" +
+    "If a child is in immediate danger, please contact emergency services (1930 / 112).\n"
+  );
+
+  window.location.href =
+    "mailto:" + to +
+    "?cc=" + cc +
+    "&subject=" + subject +
+    "&body=" + body;
+}
+</script>
+
+</body>
+</html>
